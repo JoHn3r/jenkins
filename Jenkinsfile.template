@@ -1,0 +1,25 @@
+pipeline {
+    // environment{
+    //     WORKSPACE= "${env.PWD}"
+    // }
+    agent { 
+        node { 
+            label 'linux'
+            customWorkspace "workspace/${JOB_NAME}"
+        } 
+    }
+    parameters {
+        booleanParam(name: 'Renewal', defaultValue: true, description: '')
+        string(name: 'AltName', description: 'alt name')
+        choice(name: 'Format', choices: ['cer', 'pem'], description: 'file format', )
+    }
+    stages {
+        stage('Create certificat') {
+            steps {
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                echo "${params.AltName}"
+                sh 'pwd'
+            }
+        }
+    }
+}
